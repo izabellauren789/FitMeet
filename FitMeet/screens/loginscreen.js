@@ -1,7 +1,21 @@
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 
 const loginscreen = () => {
+
+    //const [email, setEmail] = useState('')
+    //const [password, setPassword] = useState('')
+    //const auth = getAuth();
+
+    //const handleSignUp = () => {
+        //createUserWithEmailAndPassword(auth,email,password)
+        //.then(userCredentials =>{
+            //const user = userCredentials.user;
+            //console.log(user.email);
+        //})
+        //.catch(error => alert(error.message))
+    //}
   return (
     <KeyboardAvoidingView
     style={styles.container}
@@ -10,14 +24,14 @@ const loginscreen = () => {
       <View style={styles.inputContainer}>
         <TextInput
             placeholder="Email"
-            // value={ }
-            // onChangeText={text => }
+            //value={email}
+            //onChangeText={text => setEmail(text)}
             style={styles.input}
         />
         <TextInput
             placeholder="Password"
-            // value={ }
-            // onChangeText={text => }
+            //value={password}
+            //onChangeText={text => setPassword(text)}
             style={styles.input}
             secureTextEntry
         />
@@ -27,7 +41,7 @@ const loginscreen = () => {
                 onPress={() => { }}
                 style={styles.button}
             >
-                <Text style={styles.button}>Login</Text>
+                <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity> 
             <TouchableOpacity
                 onPress={() => { }}
@@ -47,5 +61,45 @@ const styles = StyleSheet.create({
         flex: 1,
        justifyContent: 'center',
        alignItems: 'center', 
-    }
+    },
+    inputContainer: {
+        width: '80%'
+    },
+    input: {
+        backgroundColor: 'white',
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        borderRadius: 10,
+        marginTop: 5,
+    },
+    buttonContainer: {
+        width: '60%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 40
+    },
+    button: {
+        backgroundColor: '#0782F9',
+        width: '100%',
+        padding: 15,
+        borderRadius: 10,
+        alignItems: 'center',
+    },
+    buttonOutline: {
+        backgroundColor: 'white',
+        marginTop: 5,
+        borderColor: '#0782F9',
+        borderWidth: 2,
+    },
+    buttonText: {
+        color: 'white',
+        fontWeight: '700',
+        fontSize: 16,
+    },
+    buttonOutlineText: {
+        color: '#0782F9',
+        fontweight: '700',
+        fontSize: 16,
+    },
+
 })
