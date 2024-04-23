@@ -1,21 +1,29 @@
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChange, signOut } from 'firebase/auth'
+import { auth } from '../FirebaseConfig'
 
 const loginscreen = () => {
 
-    //const [email, setEmail] = useState('')
-    //const [password, setPassword] = useState('')
-    //const auth = getAuth();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-    //const handleSignUp = () => {
-        //createUserWithEmailAndPassword(auth,email,password)
-        //.then(userCredentials =>{
-            //const user = userCredentials.user;
-            //console.log(user.email);
-        //})
-        //.catch(error => alert(error.message))
-    //}
+    const signUp = async () => {
+        try {
+            const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+            console.log('Registered with:', userCredentials.user.email);
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+    const signIn = async () => {
+        try {
+            const userCredentials = await signInWithEmailAndPassword(auth, email, password);
+            console.log('Logged in with:', userCredentials.user.email);
+        } catch (error) {
+            alert(error.message);
+        }
+    }
   return (
     <KeyboardAvoidingView
     style={styles.container}
@@ -24,27 +32,27 @@ const loginscreen = () => {
       <View style={styles.inputContainer}>
         <TextInput
             placeholder="Email"
-            //value={email}
-            //onChangeText={text => setEmail(text)}
+            value={email}
+            onChangeText={setEmail}
             style={styles.input}
         />
         <TextInput
             placeholder="Password"
-            //value={password}
-            //onChangeText={text => setPassword(text)}
+            value={password}
+            onChangeText={setPassword}
             style={styles.input}
             secureTextEntry
         />
         </View>
         <View style={styles.buttonContainer}>
             <TouchableOpacity
-                onPress={() => { }}
+                onPress={signIn}
                 style={styles.button}
             >
                 <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity> 
             <TouchableOpacity
-                onPress={() => { }}
+                onPress={signUp}
                 style={[styles.button, styles.buttonOutline]}
             >
                 <Text style={styles.buttonOutlineText}>Register</Text>
@@ -98,7 +106,7 @@ const styles = StyleSheet.create({
     },
     buttonOutlineText: {
         color: '#0782F9',
-        fontweight: '700',
+        fonteight: '700',
         fontSize: 16,
     },
 
