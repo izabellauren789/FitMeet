@@ -6,7 +6,7 @@ import { auth } from '../FirebaseConfig'
 import { useNavigation } from '@react-navigation/native';
 
 const SignupScreen = ({ navigation }) => {
-    // You can handle the state and functions here or any additional logic for signup
+    
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     
@@ -58,43 +58,43 @@ const SignupScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'black', // Use black for the background color
+        backgroundColor: 'black', 
         alignItems: 'center',
         justifyContent: 'center',
     },
     inputContainer: {
-        width: '80%', // You can adjust the width as needed
+        width: '80%', 
     },
     input: {
-        backgroundColor: '#2C2C2C', // Dark grey for the input background
-        color: 'white', // Text color for the input
+        backgroundColor: '#2C2C2C', 
+        color: 'white', 
         paddingHorizontal: 15,
         paddingVertical: 10,
         borderRadius: 10,
-        marginTop: 15, // Add more space between inputs
-        fontSize: 16, // Match font size with your button text
-        borderWidth: 1, // Add a border to make the input stand out
-        borderColor: '#16247d', // Use purple to match the theme
+        marginTop: 15, 
+        fontSize: 16, 
+        borderWidth: 1, 
+        borderColor: '#16247d', 
     },
     buttonContainer: {
-        width: '60%', // Keep consistent with the width of the button in login screen
-        marginTop: 20, // Add some margin at the top
+        width: '60%', 
+        marginTop: 20, 
     },
     button: {
-        backgroundColor: '#16247d', // Purple for the primary button
+        backgroundColor: '#16247d', 
         width: '100%',
         padding: 15,
         borderRadius: 10,
         alignItems: 'center',
-        marginTop: 10, // Space between buttons if needed
+        marginTop: 10, 
     },
     buttonOutline: {
-        backgroundColor: 'black', // Keep it black to match the container
-        borderColor: '#16247d', // Purple border to stand out
+        backgroundColor: 'black', 
+        borderColor: '#16247d', 
         borderWidth: 2,
     },
     buttonOutlineText: {
-        color: '#16247d', // Purple text color for contrast on black
+        color: '#16247d', 
         fontWeight: '700',
         fontSize: 16,
     },

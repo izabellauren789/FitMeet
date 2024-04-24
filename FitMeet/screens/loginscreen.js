@@ -11,13 +11,14 @@ const Loginscreen = () => {
     const navigation = useNavigation();
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, user => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
-                navigation.replace("Home");
+            navigation.replace('Homepage', { email: user.email });
             }
         });
-        return unsubscribe;
-    }, [navigation]);  
+    return unsubscribe;
+    }, [navigation]);
+  
 
     const signUp = () => {
         navigation.navigate('Signup');

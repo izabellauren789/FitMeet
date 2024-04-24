@@ -6,8 +6,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
-import Loginscreen from './screens/loginscreen'; // Ensure this path is correct
-import Homescreen from './screens/homescreen';  // Ensure this path is correct
+import Loginscreen from './screens/loginscreen'; 
+import Homescreen from './screens/homescreen'; 
 import SignupScreen from './screens/SignupScreen';
 import CalendarScreen from './screens/CalendarScreen';
 import ProfileScreen from './screens/ProfileScreen';
@@ -23,12 +23,12 @@ const screenOptions = {
     right: 0,
     left: 0,
     elevation: 0,
-    backgroundColor: 'black', // Changed from `background` to `backgroundColor`
+    backgroundColor: 'black', 
     height: 90,
-    borderTopWidth: 0, // Optional: remove border on top of the tab bar
+    borderTopWidth: 0, 
   },
-  tabBarInactiveTintColor: '#fff', // Tab icon and text color when not focused
-  tabBarActiveTintColor: '#16247d', // Tab icon and text color when focused
+  tabBarInactiveTintColor: '#fff', 
+  tabBarActiveTintColor: '#16247d', 
 }
 
 function MainTabScreen() {
@@ -87,7 +87,7 @@ export default function App() {
         <Stack.Screen 
           name="Login" 
           component={Loginscreen}
-          options={{ headerShown: false }} // Correct property use to hide header
+          options={{ headerShown: false }} 
         />
         <Stack.Screen
           name="Signup"
@@ -95,19 +95,29 @@ export default function App() {
           options={{
             title: 'Sign Up',
             headerStyle: {
-            backgroundColor: 'black', // This sets the header background color
+            backgroundColor: 'black', 
             },
             headerTitleStyle: {
-            color: '#16247d', // This sets the title color to match the purple theme
+            color: '#16247d', 
             },
-            headerTintColor: '#16247d', // This sets the back button color if you have one
+            headerTintColor: '#16247d', 
           }}
         />
         <Stack.Screen 
-          name="Home" 
+          name="Homepage" 
           component={MainTabScreen}
-          options={{ headerShown: true }} // Assuming you want to show the header here
-        />
+          options={({ route }) => ({ 
+            headerShown: true,
+            title: route.params?.email || "Homepage", 
+            headerStyle: {
+              backgroundColor: 'black', 
+            },
+            headerTitleStyle: {
+            color: '#16247d', 
+          },
+          headerTintColor: '#16247d', 
+        })}
+      />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -14,12 +14,11 @@ export default Homescreen
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2C2C2C', // Dark grey background
+    backgroundColor: '#2C2C2C', 
     alignItems: 'center',
     justifyContent: 'center',
   },
   text: {
-    color: 'black', // White color for the text so it's visible
-    // Define additional text styles here if necessary
+    color: 'black', 
   },
 })
