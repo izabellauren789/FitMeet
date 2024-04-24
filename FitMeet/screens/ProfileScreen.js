@@ -1,15 +1,15 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
 
-const Homescreen = () => {
+const ProfileScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Home Screen</Text>
+      <Text style={styles.text}>Profile Screen</Text>
     </View>
-  )
-}
+  );
+};
 
-export default Homescreen
+export default ProfileScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -22,4 +22,4 @@ const styles = StyleSheet.create({
     color: 'black', // White color for the text so it's visible
     // Define additional text styles here if necessary
   },
-})
+});

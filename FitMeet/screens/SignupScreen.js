@@ -74,14 +74,14 @@ const styles = StyleSheet.create({
         marginTop: 15, // Add more space between inputs
         fontSize: 16, // Match font size with your button text
         borderWidth: 1, // Add a border to make the input stand out
-        borderColor: 'purple', // Use purple to match the theme
+        borderColor: '#16247d', // Use purple to match the theme
     },
     buttonContainer: {
         width: '60%', // Keep consistent with the width of the button in login screen
         marginTop: 20, // Add some margin at the top
     },
     button: {
-        backgroundColor: '#6A0DAD', // Purple for the primary button
+        backgroundColor: '#16247d', // Purple for the primary button
         width: '100%',
         padding: 15,
         borderRadius: 10,
@@ -90,11 +90,11 @@ const styles = StyleSheet.create({
     },
     buttonOutline: {
         backgroundColor: 'black', // Keep it black to match the container
-        borderColor: '#6A0DAD', // Purple border to stand out
+        borderColor: '#16247d', // Purple border to stand out
         borderWidth: 2,
     },
     buttonOutlineText: {
-        color: '#6A0DAD', // Purple text color for contrast on black
+        color: '#16247d', // Purple text color for contrast on black
         fontWeight: '700',
         fontSize: 16,
     },

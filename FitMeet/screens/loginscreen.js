@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthState
 import { auth } from '../FirebaseConfig'
 import { useNavigation } from '@react-navigation/native'
 
-const loginscreen = () => {
+const Loginscreen = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -73,7 +73,7 @@ const loginscreen = () => {
   )
 }
 
-export default loginscreen
+export default Loginscreen
 
 const styles = StyleSheet.create({
     container: {
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
         marginTop: 40
     },
     button: {
-        backgroundColor: '#6A0DAD',
+        backgroundColor: '#16247d',
         width: '100%',
         padding: 15,
         borderRadius: 10,
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     buttonOutline: {
         backgroundColor: 'black',
         marginTop: 5,
-        borderColor: '#6A0DAD',
+        borderColor: '#16247d',
         borderWidth: 2,
     },
     buttonText: {
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     buttonOutlineText: {
-        color: '#6A0DAD',
+        color: '#16247d',
         fontWeight: '700',
         fontSize: 16,
     },
