@@ -14,11 +14,11 @@ export default CalendarScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#2C2C2C', 
+        backgroundColor: 'black', 
         alignItems: 'center',
         justifyContent: 'center',
       },
       text: {
-        color: 'black', 
+        color: '#2C2C2C', 
       },
 })

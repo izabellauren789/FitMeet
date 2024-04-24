@@ -23,7 +23,7 @@ const screenOptions = {
     right: 0,
     left: 0,
     elevation: 0,
-    backgroundColor: 'black', 
+    backgroundColor: '#121212', 
     height: 90,
     borderTopWidth: 0, 
   },
@@ -41,8 +41,8 @@ function MainTabScreen() {
            tabBarIcon: ({focused})=>{
              return (
                <View style={{alignItems: "center", justifyContent: "center"}}> 
-                 <Entypo name="home" size={24} color={focused ? "#16247d": "#2C2C2C"} />
-                 <Text style={{ fontSize: 12, color: focused ? "#16247d" : "#2C2C2C" }}>Home</Text>
+                 <Entypo name="home" size={24} color={focused ? "#16247d": "#383838"} />
+                 <Text style={{ fontSize: 12, color: focused ? "#16247d" : "#383838" }}>Home</Text>
            </View>
              )
            }
@@ -55,8 +55,8 @@ function MainTabScreen() {
            tabBarIcon: ({focused})=>{
              return (
                <View style={{alignItems: "center", justifyContent: "center"}}> 
-                <AntDesign name="calendar" size={24} color={focused ? "#16247d": "#2C2C2C"} />
-                <Text style={{ fontSize: 12, color: focused ? "#16247d" : "#2C2C2C" }}>Calendar</Text>
+                <AntDesign name="calendar" size={24} color={focused ? "#16247d": "#383838"} />
+                <Text style={{ fontSize: 12, color: focused ? "#16247d" : "#383838" }}>Calendar</Text>
            </View>
              )
            }
@@ -69,8 +69,8 @@ function MainTabScreen() {
             tabBarIcon: ({focused})=>{
               return (
                 <View style={{alignItems: "center", justifyContent: "center"}}> 
-                 <AntDesign name="user" size={24} color={focused ? "#16247d": "#2C2C2C"} />
-                 <Text style={{ fontSize: 12, color: focused ? "#16247d" : "#2C2C2C" }}>Profile</Text>
+                 <AntDesign name="user" size={24} color={focused ? "#16247d": "#383838"} />
+                 <Text style={{ fontSize: 12, color: focused ? "#16247d" : "#383838" }}>Profile</Text>
             </View>
               )
             }
@@ -110,7 +110,7 @@ export default function App() {
             headerShown: true,
             title: route.params?.email || "Homepage", 
             headerStyle: {
-              backgroundColor: 'black', 
+              backgroundColor: '#121212', 
             },
             headerTitleStyle: {
             color: '#16247d', 
