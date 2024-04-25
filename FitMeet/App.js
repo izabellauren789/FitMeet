@@ -11,6 +11,7 @@ import Homescreen from './screens/homescreen';
 import SignupScreen from './screens/SignupScreen';
 import CalendarScreen from './screens/CalendarScreen';
 import ProfileScreen from './screens/ProfileScreen';
+import GroupScreen from './screens/GroupsScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -61,6 +62,20 @@ function MainTabScreen() {
              )
            }
          }}
+         />
+         <Tab.Screen 
+         name="Groups" 
+         component={GroupScreen} 
+         options={{
+            tabBarIcon: ({focused})=>{
+              return (
+                <View style={{alignItems: "center", justifyContent: "center"}}> 
+                 <AntDesign name="user" size={24} color={focused ? "#16247d": "#383838"} />
+                 <Text style={{ fontSize: 12, color: focused ? "#16247d" : "#383838" }}>Groups</Text>
+            </View>
+              )
+            }
+          }}
          />
          <Tab.Screen 
          name="Profile" 
