@@ -1,9 +1,11 @@
 
 import React, { useEffect, useState } from 'react'
-import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet, KeyboardAvoidingView} from 'react-native';
+import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Image} from 'react-native';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth'
 import { auth } from '../FirebaseConfig'
 import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 const SignupScreen = ({ navigation }) => {
     
@@ -24,33 +26,82 @@ const SignupScreen = ({ navigation }) => {
     style={styles.container}
     behavior="padding"
     >
-      <View style={styles.inputContainer}>
-        <TextInput
-            placeholder="Email"
-            placeholderTextColor="grey"
-            autoCapitalize='none'
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-            style={styles.input}
-        />
-        <TextInput
-            placeholder="Password"
-            placeholderTextColor="grey"
-            autoCapitalize='none'
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-            style={styles.input}
-            secureTextEntry
-        />
-        </View>
-        <View style={styles.buttonContainer}>
-            <TouchableOpacity
-                onPress={signUp}
-                style={[styles.button, styles.buttonOutline]}
+        <LinearGradient
+                style={{
+                    flex: 1,
+                    width: '100%',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}
+                colors={['#cbddfb', '#800080']} // Black to Purple gradient
             >
-                <Text style={styles.buttonOutlineText}>Create Account</Text>
-            </TouchableOpacity>  
-      </View>
+                <View style={{
+                    width: '80%',
+                    alignItems: 'center'
+                }}>
+                    <Image
+                        source={require('../assets/fitmeet-logo.png')}
+                        style={{ width: 200, 
+                                 height: 200
+                               }} 
+                    />
+
+                    <Text style={{
+                        fontSize: 30,
+                        fontWeight: 'bold',
+                        marginVertical: 12,
+                        color: 'white' // Fixed color reference
+                    }}>
+                        FitMeet
+                    </Text>
+
+                    <Text style={{
+                        fontSize: 20,
+                        fontWeight: 'bold',
+                        marginVertical: 12,
+                        color: 'white' // Fixed color reference
+                    }}>
+                        Resgister Now 
+                    </Text>
+
+                </View>
+                <View style={styles.inputContainer}>
+                <TextInput
+                        placeholder="Username"
+                        placeholderTextColor="grey"
+                        autoCapitalize='none'
+                        value={password}
+                        onChangeText={(text) => setUsername(text)}
+                        style={styles.input}
+                        secureTextEntry
+                    />
+                    <TextInput
+                        placeholder="Email"
+                        placeholderTextColor="grey"
+                        autoCapitalize='none'
+                        value={email}
+                        onChangeText={(text) => setEmail(text)}
+                        style={styles.input}
+                    />
+                    <TextInput
+                        placeholder="Password"
+                        placeholderTextColor="grey"
+                        autoCapitalize='none'
+                        value={password}
+                        onChangeText={(text) => setPassword(text)}
+                        style={styles.input}
+                        secureTextEntry
+                    />
+                    </View>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity
+                            onPress={signUp}
+                            style={[styles.button, styles.buttonOutline]}
+                        >
+                            <Text style={styles.buttonOutlineText}>Create Account</Text>
+                        </TouchableOpacity>  
+                </View>
+        </LinearGradient>
     </KeyboardAvoidingView>
     );
 };
@@ -94,7 +145,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
     },
     buttonOutlineText: {
-        color: '#16247d', 
+        color: 'white', 
         fontWeight: '700',
         fontSize: 16,
     },
