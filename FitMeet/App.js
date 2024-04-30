@@ -6,12 +6,17 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import Loginscreen from './screens/loginscreen'; 
 import Homescreen from './screens/homescreen'; 
 import SignupScreen from './screens/SignupScreen';
 import CalendarScreen from './screens/CalendarScreen';
 import ProfileScreen from './screens/ProfileScreen';
-import GroupScreen from './screens/GroupsScreen';
+import GroupsScreen from './screens/GroupsScreen';
+import ScheduleActivityScreen from './screens/ScheduleActivityScreen';
+import GroupCalendarScreen from './screens/GroupCalendarScreen';
+import CreateGroupCalendarScreen from './screens/CreateGroupCalendar';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -31,6 +36,18 @@ const screenOptions = {
   tabBarInactiveTintColor: '#fff', 
   tabBarActiveTintColor: '#16247d', 
 }
+const GroupStack = createNativeStackNavigator();
+
+function GroupStackNavigator() {
+  return (
+    <GroupStack.Navigator>
+      <GroupStack.Screen name="GroupList" component={GroupsScreen} options={{ title: 'My Groups' }} />
+      <Stack.Screen name="GroupCalendar" component={GroupCalendarScreen} options={{ title: 'Group Calendar' }} />
+      <Stack.Screen name="CreateGroupCalendar" component={CreateGroupCalendarScreen} options={{ title: 'Create Group Calendar' }} />
+    </GroupStack.Navigator>
+  );
+}
+
 
 function MainTabScreen() {
   return (
@@ -63,14 +80,23 @@ function MainTabScreen() {
            }
          }}
          />
+        <Tab.Screen 
+          name="AddActivity" 
+          component={ScheduleActivityScreen} 
+          options={{
+          tabBarIcon: ({focused}) => (
+          <Ionicons name="add-circle" size={48} color={focused ? "#16247d" : "#383838"} style={{ marginBottom: 0 }}/>
+           )
+          }}
+        />
          <Tab.Screen 
          name="Groups" 
-         component={GroupScreen} 
+         component={GroupStackNavigator} 
          options={{
             tabBarIcon: ({focused})=>{
               return (
                 <View style={{alignItems: "center", justifyContent: "center"}}> 
-                 <AntDesign name="user" size={24} color={focused ? "#16247d": "#383838"} />
+                <MaterialIcons name="groups" size={24} color={focused ? "#16247d": "#383838"} />
                  <Text style={{ fontSize: 12, color: focused ? "#16247d" : "#383838" }}>Groups</Text>
             </View>
               )
