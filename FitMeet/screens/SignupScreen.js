@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet, KeyboardAvoidingView} from 'react-native';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth'
-import { auth } from '../FirebaseConfig'
+import { auth, db } from '../FirebaseConfig'
+import { doc, setDoc } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 
 const SignupScreen = ({ navigation }) => {
@@ -14,9 +15,15 @@ const SignupScreen = ({ navigation }) => {
         try {
             const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
             console.log('Registered with:', userCredentials.user.email);
-        } catch (error) {
-            alert(error.message);
-        }
+
+            // Save the user data to Firestore
+            const userRef = doc(db, "Users", userCredentials.user.uid);
+            await setDoc(userRef, {
+                email: userCredentials.user.email,
+                friends: [],
+                bio: ""
+            });
+        } catch (error) {}
     }
 
     return (
