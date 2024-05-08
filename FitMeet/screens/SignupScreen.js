@@ -1,15 +1,17 @@
 
 import React, { useEffect, useState } from 'react'
-import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet, KeyboardAvoidingView} from 'react-native';
+import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Image} from 'react-native';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth'
 import { auth, db } from '../FirebaseConfig'
 import { doc, setDoc } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const SignupScreen = ({ navigation }) => {
     
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
     
     const signUp = async () => {
         try {
@@ -19,6 +21,7 @@ const SignupScreen = ({ navigation }) => {
             // Save the user data to Firestore
             const userRef = doc(db, "Users", userCredentials.user.uid);
             await setDoc(userRef, {
+                user: userCredentials.user.username,
                 email: userCredentials.user.email,
                 friends: [],
                 bio: ""
@@ -27,40 +30,88 @@ const SignupScreen = ({ navigation }) => {
     }
 
     return (
-    <KeyboardAvoidingView
-    style={styles.container}
-    behavior="padding"
-    >
-      <View style={styles.inputContainer}>
-        <TextInput
-            placeholder="Email"
-            placeholderTextColor="grey"
-            autoCapitalize='none'
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-            style={styles.input}
-        />
-        <TextInput
-            placeholder="Password"
-            placeholderTextColor="grey"
-            autoCapitalize='none'
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-            style={styles.input}
-            secureTextEntry
-        />
-        </View>
-        <View style={styles.buttonContainer}>
-            <TouchableOpacity
-                onPress={signUp}
-                style={[styles.button, styles.buttonOutline]}
-            >
-                <Text style={styles.buttonOutlineText}>Create Account</Text>
-            </TouchableOpacity>  
-      </View>
-    </KeyboardAvoidingView>
-    );
-};
+        <KeyboardAvoidingView
+        style={styles.container}
+        behavior="padding"
+        >
+            <LinearGradient
+                    style={{
+                        flex: 1,
+                        width: '100%',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}
+                    colors={['#cbddfb', '#800080']} // Black to Purple gradient
+                >
+                    <View style={{
+                        width: '80%',
+                        alignItems: 'center'
+                    }}>
+                        <Image
+                            source={require('../assets/fitmeet-logo.png')}
+                            style={{ width: 200, 
+                                     height: 200
+                                   }} 
+                        />
+    
+                        <Text style={{
+                            fontSize: 30,
+                            fontWeight: 'bold',
+                            marginVertical: 12,
+                            color: 'white' // Fixed color reference
+                        }}>
+                            FitMeet
+                        </Text>
+    
+                        <Text style={{
+                            fontSize: 20,
+                            fontWeight: 'bold',
+                            marginVertical: 12,
+                            color: 'white' // Fixed color reference
+                        }}>
+                            Register Now 
+                        </Text>
+    
+                    </View>
+                    <View style={styles.inputContainer}>
+                    <TextInput
+                            placeholder="Username"
+                            placeholderTextColor="grey"
+                            autoCapitalize='none'
+                            value={username}
+                            onChangeText={(text) => setUsername(text)}
+                            style={styles.input}
+                        />
+                        <TextInput
+                            placeholder="Email"
+                            placeholderTextColor="grey"
+                            autoCapitalize='none'
+                            value={email}
+                            onChangeText={(text) => setEmail(text)}
+                            style={styles.input}
+                        />
+                        <TextInput
+                            placeholder="Password"
+                            placeholderTextColor="grey"
+                            autoCapitalize='none'
+                            value={password}
+                            onChangeText={(text) => setPassword(text)}
+                            style={styles.input}
+                            secureTextEntry
+                        />
+                        </View>
+                        <View style={styles.buttonContainer}>
+                            <TouchableOpacity
+                                onPress={signUp}
+                                style={[styles.button, styles.buttonOutline]}
+                            >
+                                <Text style={styles.buttonOutlineText}>Create Account</Text>
+                            </TouchableOpacity>  
+                    </View>
+            </LinearGradient>
+        </KeyboardAvoidingView>
+        );
+    };
 
 const styles = StyleSheet.create({
     container: {
@@ -101,7 +152,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
     },
     buttonOutlineText: {
-        color: '#16247d', 
+        color: 'white', 
         fontWeight: '700',
         fontSize: 16,
     },
