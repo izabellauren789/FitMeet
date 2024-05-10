@@ -17,6 +17,8 @@ import GroupsScreen from './screens/GroupsScreen';
 import ScheduleActivityScreen from './screens/ScheduleActivityScreen';
 import GroupCalendarScreen from './screens/GroupCalendarScreen';
 import CreateGroupCalendarScreen from './screens/CreateGroupCalendar';
+import 'react-native-reanimated';
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
