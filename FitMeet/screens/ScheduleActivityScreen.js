@@ -29,7 +29,7 @@ const ScheduleActivityScreen = ({ navigation }) => {
       name: activity,
       date: date,
       location: location,
-      type: calendarType, // Personal or Group
+      type: calendarType, // Personal or Group Calendar
       created: new Date(),
       host: auth.currentUser.email,
       notifyMembers: sendNotification

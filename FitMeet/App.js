@@ -11,13 +11,17 @@ import { Ionicons } from '@expo/vector-icons';
 import Loginscreen from './screens/loginscreen'; 
 import Homescreen from './screens/homescreen'; 
 import SignupScreen from './screens/SignupScreen';
-import CalendarScreen from './screens/CalendarScreen';
+import SearchScreen from './screens/SearchScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import GroupsScreen from './screens/GroupsScreen';
 import ScheduleActivityScreen from './screens/ScheduleActivityScreen';
 import GroupCalendarScreen from './screens/GroupCalendarScreen';
 import CreateGroupCalendarScreen from './screens/CreateGroupCalendar';
+import ScheduleGroupActivity from './screens/ScheduleGroupActivity';
+import FollowersScreen from './screens/FollowersScreen';
+import FollowingScreen from './screens/FollowingScreen';
 import 'react-native-reanimated';
+import { FontAwesome } from '@expo/vector-icons';
 
 
 const Stack = createNativeStackNavigator();
@@ -46,10 +50,22 @@ function GroupStackNavigator() {
       <GroupStack.Screen name="GroupList" component={GroupsScreen} options={{ title: 'My Groups' }} />
       <Stack.Screen name="GroupCalendar" component={GroupCalendarScreen} options={{ title: 'Group Calendar' }} />
       <Stack.Screen name="CreateGroupCalendar" component={CreateGroupCalendarScreen} options={{ title: 'Create Group Calendar' }} />
+      <Stack.Screen name="ScheduleGroupActivity" component={ScheduleGroupActivity} options={{title: 'Schedule Group Activity'}}/>
     </GroupStack.Navigator>
   );
 }
 
+const ProfileStack = createNativeStackNavigator();
+
+function ProfileStackNavigator() {
+  return (
+    <ProfileStack.Navigator>
+      <ProfileStack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
+      <ProfileStack.Screen name="Followers" component={FollowersScreen} options={{ title: 'Followers' }} />
+      <ProfileStack.Screen name="Following" component={FollowingScreen} options={{ title: 'Following' }} />
+    </ProfileStack.Navigator>
+  );
+}
 
 function MainTabScreen() {
   return (
@@ -70,13 +86,13 @@ function MainTabScreen() {
          />
          <Tab.Screen 
          name="Calendar" 
-         component={CalendarScreen} 
+         component={SearchScreen} 
          options={{
            tabBarIcon: ({focused})=>{
              return (
                <View style={{alignItems: "center", justifyContent: "center"}}> 
                 <AntDesign name="calendar" size={24} color={focused ? "#16247d": "#383838"} />
-                <Text style={{ fontSize: 12, color: focused ? "#16247d" : "#383838" }}>Calendar</Text>
+                <Text style={{ fontSize: 12, color: focused ? "#16247d" : "#383838" }}>Search</Text>
            </View>
              )
            }
@@ -107,7 +123,7 @@ function MainTabScreen() {
          />
          <Tab.Screen 
          name="Profile" 
-         component={ProfileScreen} 
+         component={ProfileStackNavigator} 
          options={{
             tabBarIcon: ({focused})=>{
               return (

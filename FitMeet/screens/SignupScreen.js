@@ -1,50 +1,48 @@
 import React, { useState } from 'react';
 import {
   View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView,
-  Image, Button, TouchableWithoutFeedback, Keyboard
+  Image, TouchableWithoutFeedback, Keyboard
 } from 'react-native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../FirebaseConfig';
 import { LinearGradient } from 'expo-linear-gradient';
-import * as ImagePicker from 'expo-image-picker';
-import { collection, addDoc } from 'firebase/firestore';
-import { db } from '../FirebaseConfig';
+import { doc, setDoc } from 'firebase/firestore';  // Import setDoc and doc
+import { db } from '../FirebaseConfig'; 
 
 const SignupScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [bio, setBio] = useState('');
-    const [profilePic, setProfilePic] = useState(null);
 
     const signUp = async () => {
+        // Ensure all fields are filled
+        if (!email || !password || !username || !firstName || !lastName || !bio) {
+            alert('Please fill all fields.');
+            return;
+        }
         try {
             const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
-            console.log('Registered with:', userCredentials.user.email);
-            // Add user data to Firestore
-            await addDoc(collection(db, "Users"), {
+            const uid = userCredentials.user.uid; // Get Firebase Auth UID
+
+            // Use this UID to create the user document
+            await setDoc(doc(db, "users", uid), {
+                authUid: uid,  // Store Firebase Auth UID in Firestore for reference
                 username: username,
                 email: email,
+                firstName: firstName,
+                lastName: lastName,
                 bio: bio,
-                profilePic: profilePic
+                followers: [],  // Initialize an empty array for followers
+                following: []  // Also initialize an empty array for following
             });
+
             alert('User registered successfully!');
-            navigation.navigate('Home'); // Navigate to Home screen or wherever appropriate
+            navigation.navigate('Home'); // Adjust as necessary
         } catch (error) {
             alert(error.message);
-        }
-    };
-
-    const pickImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
-        });
-
-        if (!result.cancelled) {
-            setProfilePic(result.uri);
         }
     };
 
@@ -66,10 +64,8 @@ const SignupScreen = ({ navigation }) => {
                     }}>
                         <Image
                             source={require('../assets/fitmeet-logo.png')}
-                            style={{ width: 200, height: 200 }} 
+                            style={{ width: 100, height: 100 }} 
                         />
-
-                        <Text style={styles.headerText}>FitMeet</Text>
                         <Text style={styles.subHeaderText}>Register Now</Text>
                     </View>
                     <View style={styles.inputContainer}>
@@ -78,6 +74,20 @@ const SignupScreen = ({ navigation }) => {
                             placeholderTextColor="grey"
                             value={username}
                             onChangeText={setUsername}
+                            style={styles.input}
+                        />
+                        <TextInput
+                            placeholder="First Name"
+                            placeholderTextColor="grey"
+                            value={firstName}
+                            onChangeText={setFirstName}
+                            style={styles.input}
+                        />
+                        <TextInput
+                            placeholder="Last Name"
+                            placeholderTextColor="grey"
+                            value={lastName}
+                            onChangeText={setLastName}
                             style={styles.input}
                         />
                         <TextInput
@@ -102,9 +112,7 @@ const SignupScreen = ({ navigation }) => {
                             onChangeText={setBio}
                             style={styles.input}
                         />
-                        <Button title="Pick an image" onPress={pickImage} />
                     </View>
-                    {profilePic && <Image source={{ uri: profilePic }} style={{ width: 100, height: 100 }} />}
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity onPress={signUp} style={[styles.button, styles.buttonOutline]}>
                             <Text style={styles.buttonOutlineText}>Create Account</Text>
@@ -122,12 +130,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'black', 
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    headerText: {
-        fontSize: 30,
-        fontWeight: 'bold',
-        marginVertical: 12,
-        color: 'white'
     },
     subHeaderText: {
         fontSize: 20,

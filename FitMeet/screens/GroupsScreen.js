@@ -1,11 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { View, Text, Button, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
+import {db} from '../FirebaseConfig';
+import { collection, getDocs } from 'firebase/firestore';
 
 const GroupsScreen = () => {
   const navigation = useNavigation();
   const [groupCalendars, setGroupCalendars] = useState([]);
+
+  useEffect(() => {
+    const fetchGroups = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, 'Groups'));
+        const groups = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setGroupCalendars(groups);
+      } catch (error) {
+        console.error("Error fetching groups:", error);
+      }
+    };
+    fetchGroups();
+  }, []);
 
   return (
     <LinearGradient
@@ -24,7 +42,7 @@ const GroupsScreen = () => {
           <TouchableOpacity
             key={item.id}
             style={styles.itemContainer}
-            onPress={() => navigation.navigate('GroupCalendar', { groupId: item.id })}
+            onPress={() => navigation.navigate('ScheduleGroupActivity', { groupId: item.id })}
           >
             <Text style={styles.itemText}>{item.name}</Text>
           </TouchableOpacity>

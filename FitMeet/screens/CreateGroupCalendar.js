@@ -9,16 +9,30 @@ const CreateGroupCalendarScreen = ({ navigation }) => {
   const [members, setMembers] = useState([]);
   const [username, setUsername] = useState('');
 
-  const handleAddMember = () => {
-    if (username && !members.includes(username)) {
-      setMembers([...members, username]);
-      setUsername(''); // Clear input after adding
+  const handleAddMember = async () => {
+    if (username) {
+      // Query the 'users' collection to read and check if the username exists
+      const q = query(collection(db, "users"), where("username", "==", username));
+      const querySnapshot = await getDocs(q);
+        if (!querySnapshot.empty){
+          if (!members.includes(username)){
+            setMembers([...members, username]);
+            setUsername('');
+          } else {
+            Alert.alert("Duplicate", "Member has already been added");
+          }
+        } else {
+          Alert.alert("Not Found", "Username does not exist.");
+      }
     }
   };
 
   const handleSubmit = async () => {
     // Handle the creation of the group calendar here
     // Prepare the data to be stored in Firestore
+    if (groupName == '' || members.length == 0){
+      Alert.alert("Please enter a group name and add at least one member.")
+    }
     const groupData = {
       name: groupName,
       members, // Array of usernames
