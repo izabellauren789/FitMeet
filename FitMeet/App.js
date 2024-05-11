@@ -17,6 +17,8 @@ import GroupsScreen from './screens/GroupsScreen';
 import ScheduleActivityScreen from './screens/ScheduleActivityScreen';
 import GroupCalendarScreen from './screens/GroupCalendarScreen';
 import CreateGroupCalendarScreen from './screens/CreateGroupCalendar';
+import FollowersScreen from './screens/FollowersScreen';
+import FollowingScreen from './screens/FollowingScreen';
 import 'react-native-reanimated';
 
 
@@ -50,6 +52,17 @@ function GroupStackNavigator() {
   );
 }
 
+const ProfileStack = createNativeStackNavigator();
+
+function ProfileStackNavigator() {
+  return (
+    <ProfileStack.Navigator>
+      <ProfileStack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
+      <ProfileStack.Screen name="Followers" component={FollowersScreen} options={{ title: 'Followers' }} />
+      <ProfileStack.Screen name="Following" component={FollowingScreen} options={{ title: 'Following' }} />
+    </ProfileStack.Navigator>
+  );
+}
 
 function MainTabScreen() {
   return (
@@ -107,7 +120,7 @@ function MainTabScreen() {
          />
          <Tab.Screen 
          name="Profile" 
-         component={ProfileScreen} 
+         component={ProfileStackNavigator} 
          options={{
             tabBarIcon: ({focused})=>{
               return (
