@@ -11,7 +11,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Loginscreen from './screens/loginscreen'; 
 import Homescreen from './screens/homescreen'; 
 import SignupScreen from './screens/SignupScreen';
-import CalendarScreen from './screens/CalendarScreen';
+import SearchScreen from './screens/SearchScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import GroupsScreen from './screens/GroupsScreen';
 import ScheduleActivityScreen from './screens/ScheduleActivityScreen';
@@ -69,8 +69,8 @@ function MainTabScreen() {
          }}
          />
          <Tab.Screen 
-         name="Calendar" 
-         component={CalendarScreen} 
+         name="Search" 
+         component={SearchScreen} 
          options={{
            tabBarIcon: ({focused})=>{
              return (
