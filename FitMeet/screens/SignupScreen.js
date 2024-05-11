@@ -21,14 +21,9 @@ const SignupScreen = ({ navigation }) => {
         try {
             const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
             console.log('Registered with:', userCredentials.user.email);
-<<<<<<< Updated upstream
-            // Add user data to Firestore
-            await addDoc(collection(db, "Users"), {
-=======
 
             // Add user data to Firestore after successful authentication
             await addDoc(collection(db, "users"), {
->>>>>>> Stashed changes
                 username: username,
                 email: email, // use the email from authentication
                 bio: bio,
@@ -180,3 +175,4 @@ const styles = StyleSheet.create({
 });
 
 export default SignupScreen;
+
