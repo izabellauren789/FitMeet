@@ -8,7 +8,7 @@ import { auth } from '../FirebaseConfig';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as ImagePicker from 'expo-image-picker';
 import { collection, addDoc } from 'firebase/firestore';
-import { db } from '../FirebaseConfig';
+import { db } from '../FirebaseConfig'; // Make sure db is properly imported from your Firebase config
 
 const SignupScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
@@ -21,15 +21,21 @@ const SignupScreen = ({ navigation }) => {
         try {
             const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
             console.log('Registered with:', userCredentials.user.email);
+<<<<<<< Updated upstream
             // Add user data to Firestore
             await addDoc(collection(db, "Users"), {
+=======
+
+            // Add user data to Firestore after successful authentication
+            await addDoc(collection(db, "users"), {
+>>>>>>> Stashed changes
                 username: username,
-                email: email,
+                email: email, // use the email from authentication
                 bio: bio,
                 profilePic: profilePic
             });
             alert('User registered successfully!');
-            navigation.navigate('Home'); // Navigate to Home screen or wherever appropriate
+            navigation.navigate('Home'); // Adjust as necessary
         } catch (error) {
             alert(error.message);
         }
