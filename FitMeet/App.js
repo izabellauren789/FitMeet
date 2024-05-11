@@ -20,6 +20,7 @@ import CreateGroupCalendarScreen from './screens/CreateGroupCalendar';
 import FollowersScreen from './screens/FollowersScreen';
 import FollowingScreen from './screens/FollowingScreen';
 import 'react-native-reanimated';
+import { FontAwesome } from '@expo/vector-icons';
 
 
 const Stack = createNativeStackNavigator();
@@ -88,8 +89,8 @@ function MainTabScreen() {
            tabBarIcon: ({focused})=>{
              return (
                <View style={{alignItems: "center", justifyContent: "center"}}> 
-                <AntDesign name="calendar" size={24} color={focused ? "#16247d": "#383838"} />
-                <Text style={{ fontSize: 12, color: focused ? "#16247d" : "#383838" }}>Calendar</Text>
+               <FontAwesome name="search" size={24} color={focused ? "#16247d": "#383838"} />
+                <Text style={{ fontSize: 12, color: focused ? "#16247d" : "#383838" }}>Search</Text>
            </View>
              )
            }

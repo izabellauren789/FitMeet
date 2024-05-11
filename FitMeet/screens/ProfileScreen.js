@@ -4,7 +4,6 @@ import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../FirebaseConfig';
 import { signOut } from 'firebase/auth';
 
-
 const ProfileScreen = ({ navigation }) => {
     const [userData, setUserData] = useState({
         username: '',
@@ -67,18 +66,18 @@ const ProfileScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'black',
+        backgroundColor: 'black',  // Same background as ScheduleActivityScreen
         alignItems: 'center',
         justifyContent: 'center',
         padding: 20,
     },
     header: {
-        color: 'white',
+        color: '#fff',
         fontSize: 24,
         marginBottom: 20,
     },
     text: {
-        color: 'white',
+        color: '#fff',
         fontSize: 16,
         marginVertical: 8,
     },
@@ -86,6 +85,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         backgroundColor: '#2C2C2C',
         padding: 10,
+        borderRadius: 10,
     },
     buttonText: {
         color: 'white',
