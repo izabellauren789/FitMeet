@@ -26,7 +26,7 @@ const CreateGroupCalendarScreen = ({ navigation }) => {
       }
     }
   };
-
+  
   const handleSubmit = async () => {
     // Handle the creation of the group calendar here
     // Prepare the data to be stored in Firestore

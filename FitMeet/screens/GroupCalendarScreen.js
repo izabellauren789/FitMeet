@@ -14,7 +14,7 @@ const GroupCalendarScreen = () => {
         </View>
       );
     };
-  
+    
     return (
       <View style={styles.container}>
         <Agenda

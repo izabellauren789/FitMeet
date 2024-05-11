@@ -50,7 +50,7 @@ function GroupStackNavigator() {
       <GroupStack.Screen name="GroupList" component={GroupsScreen} options={{ title: 'My Groups' }} />
       <Stack.Screen name="GroupCalendar" component={GroupCalendarScreen} options={{ title: 'Group Calendar' }} />
       <Stack.Screen name="CreateGroupCalendar" component={CreateGroupCalendarScreen} options={{ title: 'Create Group Calendar' }} />
-      <Stack.Screen name="ScheduleGroupActivity" component={ScheduleGroupActivity} options={{title: 'Schedule Group Activity'}}/>
+      <Stack.Screen name="ScheduleGroupActivity" component={ScheduleGroupActivity} options={{ title: 'Schedule Group Activity'}}/>
     </GroupStack.Navigator>
   );
 }
@@ -85,13 +85,13 @@ function MainTabScreen() {
          }}
          />
          <Tab.Screen 
-         name="Calendar" 
+         name="Search" 
          component={SearchScreen} 
          options={{
            tabBarIcon: ({focused})=>{
              return (
                <View style={{alignItems: "center", justifyContent: "center"}}> 
-                <AntDesign name="calendar" size={24} color={focused ? "#16247d": "#383838"} />
+               <FontAwesome name="search" size={24} color={focused ? "#16247d": "#383838"} />
                 <Text style={{ fontSize: 12, color: focused ? "#16247d" : "#383838" }}>Search</Text>
            </View>
              )

@@ -8,7 +8,7 @@ import { collection, getDocs } from 'firebase/firestore';
 const GroupsScreen = () => {
   const navigation = useNavigation();
   const [groupCalendars, setGroupCalendars] = useState([]);
-
+  
   useEffect(() => {
     const fetchGroups = async () => {
       try {

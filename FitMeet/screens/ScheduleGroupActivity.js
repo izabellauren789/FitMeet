@@ -15,7 +15,7 @@ const ScheduleGroupActivity = ({ navigation }) => {
     const [location, setLocation] = useState('');
     const [sendNotification, setSendNotification] = useState(false);
     const [markedDates, setMarkedDates] = useState({});
-
+    
     const handleSchedule = async () => {
         const newMarkedDates = {
           ...markedDates,
