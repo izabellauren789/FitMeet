@@ -22,7 +22,7 @@ const SignupScreen = ({ navigation }) => {
             const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
             console.log('Registered with:', userCredentials.user.email);
             // Add user data to Firestore
-            await addDoc(collection(db, "users"), {
+            await addDoc(collection(db, "Users"), {
                 username: username,
                 email: email,
                 bio: bio,

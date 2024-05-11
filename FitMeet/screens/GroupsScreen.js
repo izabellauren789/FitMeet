@@ -5,10 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const GroupsScreen = () => {
   const navigation = useNavigation();
-  const [groupCalendars, setGroupCalendars] = useState([
-    { id: '1', name: 'Workout Buddies' },
-    { id: '2', name: 'Running Club' }
-  ]);
+  const [groupCalendars, setGroupCalendars] = useState([]);
 
   return (
     <LinearGradient

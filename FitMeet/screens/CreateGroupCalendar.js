@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import {db, auth} from '../FirebaseConfig';
+import {collection, query, where, getDocs, addDoc} from 'firebase/firestore';
 
 const CreateGroupCalendarScreen = ({ navigation }) => {
   const [groupName, setGroupName] = useState('');
@@ -14,11 +16,25 @@ const CreateGroupCalendarScreen = ({ navigation }) => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Handle the creation of the group calendar here
-    console.log('Group Name:', groupName);
-    console.log('Members:', members);
-    navigation.goBack(); // Optionally navigate to the group calendar view or back to the groups list
+    // Prepare the data to be stored in Firestore
+    const groupData = {
+      name: groupName,
+      members, // Array of usernames
+      createdAt: new Date(),
+      createdBy: auth.currentUser.email // Assuming the user is logged in
+    }
+    try {
+      // Add the group data to the 'Groups' collection in Firestore
+      const docRef = await addDoc(collection(db, 'Groups'), groupData);
+      console.log('Group added with ID:', docRef.id);
+      
+      // Optionally navigate to the group calendar view or back to the groups list
+      navigation.goBack();
+    } catch (error) {
+      console.error('Error adding group:', error);
+    }
   };
 
   return (

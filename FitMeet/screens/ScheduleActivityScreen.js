@@ -6,6 +6,8 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { Calendar } from 'react-native-calendars';
 import { Picker } from '@react-native-picker/picker';
+import { collection, addDoc } from 'firebase/firestore';
+import { db, auth } from '../FirebaseConfig';
 
 const ScheduleActivityScreen = ({ navigation }) => {
   const [activity, setActivity] = useState('');
@@ -15,12 +17,34 @@ const ScheduleActivityScreen = ({ navigation }) => {
   const [sendNotification, setSendNotification] = useState(false);
   const [markedDates, setMarkedDates] = useState({});
 
-  const handleSchedule = () => {
+  const handleSchedule = async () => {
     const newMarkedDates = {
       ...markedDates,
       [date]: { marked: true, dotColor: '#50cebb', activeOpacity: 0, description: activity }
     };
     setMarkedDates(newMarkedDates);
+
+    // Construct the activity data
+    const activityData = {
+      name: activity,
+      date: date,
+      location: location,
+      type: calendarType, // Personal or Group
+      created: new Date(),
+      host: auth.currentUser.email,
+      notifyMembers: sendNotification
+    }
+
+    // Save the activity to Firestore
+    try {
+      const docRef = await addDoc(collection(db, 'Activities'), activityData);
+      console.log('Activity added', docRef.id)
+      setActivity('');
+      setDate('');
+      setLocation('');
+    } catch(error) {
+      console.error('Error adding activity:', error);
+    }
 
     // Implement logic for sending notifications if required
     if (calendarType === 'group' && sendNotification) {
@@ -92,6 +116,9 @@ const ScheduleActivityScreen = ({ navigation }) => {
                 </View>
               )}
             </View>
+            <TouchableOpacity onPress={handleSchedule} style={styles.scheduleButton}>
+              <Text style={styles.scheduleButtonText}>Schedule Activity</Text>
+            </TouchableOpacity>
             <Calendar
               current={Date()}
               onDayPress={(day) => setDate(day.dateString)}
@@ -103,9 +130,6 @@ const ScheduleActivityScreen = ({ navigation }) => {
               theme={calendarStyles}
               style={styles.calendar}
             />
-            <TouchableOpacity onPress={handleSchedule} style={styles.scheduleButton}>
-              <Text style={styles.scheduleButtonText}>Schedule Activity</Text>
-            </TouchableOpacity>
           </ScrollView>
         </LinearGradient>
       </TouchableWithoutFeedback>
