@@ -2,15 +2,21 @@ import { StyleSheet, Text, View } from 'react-native'
 import { Agenda } from 'react-native-calendars'
 import React, {useState, useEffect} from 'react'
 import events from '../assets/data/events.json'
-import {db} from '../FirebaseConfig';
-import { collection, getDocs } from 'firebase/firestore';
+import {db, auth} from '../FirebaseConfig';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 
 const GroupCalendarScreen = () => {
     const [items, setItems] = useState({});
 
     useEffect(() => {
         const fetchActivities = async () => {
-            const querySnapshot = await getDocs(collection(db, 'Group Activities'));
+          const userEmail = auth.currentUser?.email;
+          if (!userEmail){
+            console.log("No user logged in");
+          }
+          try{
+            const activitiesQuery = query(collection(db, 'Group Activities'), where('host', '==', userEmail));
+            const querySnapshot = await getDocs(activitiesQuery);
             const loadedItems = {};
             querySnapshot.forEach((doc) => {
                 const { date, name, description } = doc.data();
@@ -23,6 +29,9 @@ const GroupCalendarScreen = () => {
                 });
             });
             setItems(loadedItems);
+          } catch (error) {
+            console.error("Error fetching activities:", error);
+          }
         };
 
         fetchActivities();
