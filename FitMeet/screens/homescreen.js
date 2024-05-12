@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { db, auth } from '../FirebaseConfig';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 
@@ -9,26 +10,32 @@ const Homescreen = () => {
 
     useEffect(() => {
         const fetchActivities = async () => {
-            const querySnapshot = await getDocs(collection(db, 'activities'));
-            const loadedItems = {};
-            querySnapshot.forEach((doc) => {
-                const { date, name, description } = doc.data();
-                if (!loadedItems[date]) {
-                    loadedItems[date] = [];
-                }
-                loadedItems[date].push({
-                    name: name,
-                    description: description
-                });
-            });
+          const userEmail = auth.currentUser?.email;
+          if (!userEmail){
+            console.log("No user logged in");
+            return
+          }
+          try {
+            const activitiesQuery = query(collection(db, 'activities'), where('host', '==', userEmail));
+            const querySnapshot = await getDocs(activitiesQuery);
+            const loadedItems = querySnapshot.docs.map(doc => ({
+              id: doc.id,
+              ...doc.data()
+            }));
             setItems(loadedItems);
+          } catch (error) {
+            console.error("Error fetching activities:", error);
+          }
         };
 
         fetchActivities();
     }, []);
 
   return (
-    <View style={styles.container}>
+    <LinearGradient 
+    style={styles.container}
+    colors={['#cbddfb', '#800080']}
+    >
       <FlatList
         data={activities}
         keyExtractor={item => item.id}
@@ -38,24 +45,25 @@ const Homescreen = () => {
           </View>
         )}
       />
-    </View>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
   },
   item: {
     padding: 20,
     borderBottomWidth: 1,
-    borderBottomColor: 'white'
+    borderBottomColor: 'white',
+    width: '90%'
   },
   text: {
-    color: 'white',
+    color: 'black',
     fontSize: 16
   }
 });

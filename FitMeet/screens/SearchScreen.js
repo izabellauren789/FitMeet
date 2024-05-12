@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, FlatList, StyleSheet, Alert, Button } from 'react-native';
 import { collection, query, where, getDocs, doc, updateDoc, arrayUnion } from 'firebase/firestore';
-import { db, auth } from '../FirebaseConfig'; 
+import { db, auth } from '../FirebaseConfig';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const SearchScreen = () => {
     const [username, setUsername] = useState('');
@@ -54,7 +55,10 @@ const SearchScreen = () => {
     };
 
     return (
-        <View style={styles.container}>
+        <LinearGradient 
+        style={styles.container}
+        colors={['#cbddfb', '#800080']}
+        >
             <TextInput 
                 style={styles.input}
                 placeholder="Search by username"
@@ -77,7 +81,7 @@ const SearchScreen = () => {
                     </View>
                 )}
             />
-        </View>
+        </LinearGradient >
     );
 };
 
