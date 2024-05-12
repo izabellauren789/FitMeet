@@ -7,7 +7,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../FirebaseConfig';
 import { LinearGradient } from 'expo-linear-gradient';
 import { doc, setDoc } from 'firebase/firestore';  // Import setDoc and doc
-import { db } from '../FirebaseConfig'; 
+import { db } from '../FirebaseConfig';
 
 const SignupScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');

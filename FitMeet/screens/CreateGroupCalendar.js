@@ -19,10 +19,10 @@ const CreateGroupCalendarScreen = ({ navigation }) => {
             setMembers([...members, username]);
             setUsername('');
           } else {
-            Alert.alert("Duplicate", "Member has already been added");
+            alert("Duplicate", "Member has already been added");
           }
         } else {
-          Alert.alert("Not Found", "Username does not exist.");
+          alert("Not Found", "Username does not exist.");
       }
     }
   };
@@ -31,7 +31,7 @@ const CreateGroupCalendarScreen = ({ navigation }) => {
     // Handle the creation of the group calendar here
     // Prepare the data to be stored in Firestore
     if (groupName == '' || members.length == 0){
-      Alert.alert("Please enter a group name and add at least one member.")
+      alert("Please enter a group name and add at least one member.")
     }
     const groupData = {
       name: groupName,

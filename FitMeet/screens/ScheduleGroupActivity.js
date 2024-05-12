@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ScrollView, KeyboardAvoidingView, TouchableOpacity, View, Text, Button, 
   TextInput, StyleSheet, Image, TouchableWithoutFeedback, Keyboard, Switch
@@ -8,6 +8,25 @@ import { Calendar } from 'react-native-calendars';
 import { Picker } from '@react-native-picker/picker';
 import { collection, addDoc } from 'firebase/firestore';
 import { db, auth } from '../FirebaseConfig';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const storeData = async (value) => {
+    try {
+        constjsonValue = JSON.stringify(value)
+        await AsyncStorage.setItem('@storage_Key', jsonValue)
+    } catch (e) {
+        console.error('Error saving data', e)
+    }
+}
+
+const readData = async () => {
+    try {
+        const jsonValue = await AsyncStorage.getItem('@storage_Key')
+        return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch(e) {
+        console.error('Error reading data', e);
+    }
+}
 
 const ScheduleGroupActivity = ({ navigation }) => {
     const [activity, setActivity] = useState('');
@@ -15,7 +34,7 @@ const ScheduleGroupActivity = ({ navigation }) => {
     const [location, setLocation] = useState('');
     const [sendNotification, setSendNotification] = useState(false);
     const [markedDates, setMarkedDates] = useState({});
-    
+
     const handleSchedule = async () => {
         const newMarkedDates = {
           ...markedDates,
@@ -37,6 +56,8 @@ const ScheduleGroupActivity = ({ navigation }) => {
         try {
           const docRef = await addDoc(collection(db, 'Group Activities'), activityData);
           console.log('Activity added', docRef.id)
+
+          await storeData(activityData);
           setActivity('');
           setDate('');
           setLocation('');
@@ -55,6 +76,16 @@ const ScheduleGroupActivity = ({ navigation }) => {
         setDate('');
         setLocation('');
       };
+
+      useEffect(() => {
+        const loadEvents = async () => {
+            const savedEvents = await readData();
+            if (savedEvents) {
+                const formattedDate = {[savedEvents.data]: { marked: true, dotColor: '#50cebb', activeOpacity: 0, description: savedEvents.name}};
+            }
+        };
+        loadEvents();
+      }, []);
 
       return (
         <KeyboardAvoidingView style={styles.container} behavior="padding">

@@ -2,21 +2,49 @@ import React, { useState, useEffect} from 'react';
 import { View, Text, Button, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
-import {db} from '../FirebaseConfig';
-import { collection, getDocs } from 'firebase/firestore';
+import {db, auth} from '../FirebaseConfig';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 
 const GroupsScreen = () => {
   const navigation = useNavigation();
   const [groupCalendars, setGroupCalendars] = useState([]);
-  
+
   useEffect(() => {
     const fetchGroups = async () => {
+      // Check if the user is logged in
+      const userEmail = auth.currentUser?.email;
+      if (!userEmail) {
+        console.log("No user logged in");
+        return;
+      }
       try {
-        const querySnapshot = await getDocs(collection(db, 'Groups'));
-        const groups = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
+        // QUery the groups where the user is a host whose email is the value for 'createdBy',
+        // or a member of a group whose email is a value for 'members'
+        const createdByQuery = query(collection(db, 'Groups'), where('createdBy', '==', userEmail));
+        const memberOfQuery = query(collection(db, 'Groups'), where('members', 'array-contains', userEmail));
+
+        // Execute both of the queries
+        const [createdBySnapshot, memberOfSnapshot] = await Promise.all([
+          getDocs(createdByQuery),
+          getDocs(memberOfQuery)
+        ]);
+
+        // Merge results, avoiding duplicates
+        const groupSet = new Set();
+        const groups = [];
+
+        createdBySnapshot.docs.forEach(doc => {
+          groups.push({ id: doc.id, ...doc.data() });
+          groupSet.add(doc.id);
+        });
+
+        memberOfSnapshot.docs.forEach(doc => {
+          if (!groupSet.has(doc.id)) {
+            groups.push({ id: doc.id, ...doc.data() });
+            groupSet.add(doc.id);
+          }
+        });
+
         setGroupCalendars(groups);
       } catch (error) {
         console.error("Error fetching groups:", error);

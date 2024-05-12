@@ -1,24 +1,46 @@
 import { StyleSheet, Text, View } from 'react-native'
 import { Agenda } from 'react-native-calendars'
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import events from '../assets/data/events.json'
-import { AgendaEntry } from 'react-native-calendars';
+import {db} from '../FirebaseConfig';
+import { collection, getDocs } from 'firebase/firestore';
 
 const GroupCalendarScreen = () => {
-    const renderItem = (item, isFirstItem) => {
-      // You can check if 'isFirstItem' is true to add custom styling to the first item
-      return (
-        <View style={styles.itemContainer}>
-          <Text style={styles.itemText}>{item.name}</Text>
-          {/* Render more item details here */}
-        </View>
-      );
+    const [items, setItems] = useState({});
+
+    useEffect(() => {
+        const fetchActivities = async () => {
+            const querySnapshot = await getDocs(collection(db, 'Group Activities'));
+            const loadedItems = {};
+            querySnapshot.forEach((doc) => {
+                const { date, name, description } = doc.data();
+                if (!loadedItems[date]) {
+                    loadedItems[date] = [];
+                }
+                loadedItems[date].push({
+                    name: name,
+                    description: description
+                });
+            });
+            setItems(loadedItems);
+        };
+
+        fetchActivities();
+    }, []);
+
+    const renderItem = (item) => {
+        return (
+            <View style={styles.itemContainer}>
+                <Text style={styles.itemText}>{item.name}</Text>
+                <Text style={styles.itemDetail}>{item.description}</Text>
+            </View>
+        );
     };
-    
+
     return (
       <View style={styles.container}>
         <Agenda
-          items={events}
+          items={items}
           renderItem={renderItem}
           theme={{
             // Agenda container and day backgrounds
