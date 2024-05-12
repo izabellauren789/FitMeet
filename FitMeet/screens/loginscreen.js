@@ -46,7 +46,7 @@ const Loginscreen = () => {
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}
-                colors={['#cbddfb', '#800080']} // Black to Purple gradient
+                colors={['#cbddfb', '#800080']} 
             >
                 <View style={{
                     width: '80%',
@@ -63,7 +63,7 @@ const Loginscreen = () => {
                         fontSize: 30,
                         fontWeight: 'bold',
                         marginVertical: 12,
-                        color: 'white' // Fixed color reference
+                        color: 'white' 
                     }}>
                         FitMeet
                     </Text>
@@ -119,7 +119,7 @@ const Loginscreen = () => {
                         alignItems: 'center',
                     }}>
                         <Text style={{
-                            color: 'white', // Correct color
+                            color: 'white', 
                             fontWeight: '700',
                             fontSize: 16,
                         }}>Login</Text>
@@ -131,10 +131,10 @@ const Loginscreen = () => {
                         padding: 15,
                         borderRadius: 10,
                         alignItems: 'center',
-                        marginTop: 10 // Added some spacing
+                        marginTop: 10 
                     }}>
                         <Text style={{
-                            color: 'white', // Correct color
+                            color: 'white', 
                             fontWeight: '700',
                             fontSize: 16,
                         }}>Create Account</Text>

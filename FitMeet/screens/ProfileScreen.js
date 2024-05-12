@@ -71,7 +71,7 @@ const ProfileScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'black',  // Same background as ScheduleActivityScreen
+        backgroundColor: 'black',  
         alignItems: 'center',
         justifyContent: 'center',
         padding: 20,
