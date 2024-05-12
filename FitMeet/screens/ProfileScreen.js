@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../FirebaseConfig';
 import { signOut } from 'firebase/auth';
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 const ProfileScreen = ({ navigation }) => {
     const [userData, setUserData] = useState({
@@ -47,7 +49,10 @@ const ProfileScreen = ({ navigation }) => {
     }, []);
 
     return (
-        <View style={styles.container}>
+        <LinearGradient 
+        style={styles.container}
+        colors={['#cbddfb', '#800080']}
+        >
             <Text style={styles.header}>My Profile</Text>
             <Text style={styles.text}>Username: {userData.username}</Text>
             <Text style={styles.text}>First Name: {userData.firstName}</Text>
@@ -59,7 +64,7 @@ const ProfileScreen = ({ navigation }) => {
             <TouchableOpacity onPress={handleLogout} style={styles.button}>
                 <Text style={styles.buttonText}>Logout</Text>
             </TouchableOpacity>
-        </View>
+        </LinearGradient>
     );
 };
 
