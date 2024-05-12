@@ -5,7 +5,6 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Calendar } from 'react-native-calendars';
-import { Picker } from '@react-native-picker/picker';
 import { collection, addDoc } from 'firebase/firestore';
 import { db, auth } from '../FirebaseConfig';
 
@@ -13,8 +12,6 @@ const ScheduleActivityScreen = ({ navigation }) => {
   const [activity, setActivity] = useState('');
   const [date, setDate] = useState('');
   const [location, setLocation] = useState('');
-  const [calendarType, setCalendarType] = useState('personal');
-  const [sendNotification, setSendNotification] = useState(false);
   const [markedDates, setMarkedDates] = useState({});
 
   const handleSchedule = async () => {
@@ -29,15 +26,13 @@ const ScheduleActivityScreen = ({ navigation }) => {
       name: activity,
       date: date,
       location: location,
-      type: calendarType, // Personal or Group Calendar
       created: new Date(),
       host: auth.currentUser.email,
-      notifyMembers: sendNotification
     }
 
     // Save the activity to Firestore
     try {
-      const docRef = await addDoc(collection(db, 'Activities'), activityData);
+      const docRef = await addDoc(collection(db, 'activities'), activityData);
       console.log('Activity added', docRef.id)
       setActivity('');
       setDate('');
@@ -45,13 +40,6 @@ const ScheduleActivityScreen = ({ navigation }) => {
     } catch(error) {
       console.error('Error adding activity:', error);
     }
-
-    // Implement logic for sending notifications if required
-    if (calendarType === 'group' && sendNotification) {
-      // Logic to send notification
-      console.log('Notification sent to group members!');
-    }
-
     alert('Activity scheduled!');
     setActivity('');
     setDate('');
@@ -95,26 +83,6 @@ const ScheduleActivityScreen = ({ navigation }) => {
                 onChangeText={setLocation}
                 style={styles.input}
               />
-              <Picker
-                selectedValue={calendarType}
-                style={styles.picker}
-                onValueChange={(itemValue, itemIndex) => {
-                  setCalendarType(itemValue);
-                  setSendNotification(itemValue === 'group');
-                }}
-              >
-                <Picker.Item label="Personal Calendar" value="personal" />
-                <Picker.Item label="Group Calendar" value="group" />
-              </Picker>
-              {calendarType === 'group' && (
-                <View style={styles.switchContainer}>
-                  <Text style={styles.switchLabel}>Notify group members:</Text>
-                  <Switch
-                    onValueChange={setSendNotification}
-                    value={sendNotification}
-                  />
-                </View>
-              )}
             </View>
             <TouchableOpacity onPress={handleSchedule} style={styles.scheduleButton}>
               <Text style={styles.scheduleButtonText}>Schedule Activity</Text>
