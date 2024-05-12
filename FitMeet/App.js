@@ -20,6 +20,7 @@ import CreateGroupCalendarScreen from './screens/CreateGroupCalendar';
 import ScheduleGroupActivity from './screens/ScheduleGroupActivity';
 import FollowersScreen from './screens/FollowersScreen';
 import FollowingScreen from './screens/FollowingScreen';
+import InvitationsScreen from './screens/InvitationsScreen';
 import 'react-native-reanimated';
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -50,6 +51,7 @@ function GroupStackNavigator() {
       <GroupStack.Screen name="GroupList" component={GroupsScreen} options={{ title: 'My Groups' }} />
       <Stack.Screen name="GroupCalendar" component={GroupCalendarScreen} options={{ title: 'Group Calendar' }} />
       <Stack.Screen name="CreateGroupCalendar" component={CreateGroupCalendarScreen} options={{ title: 'Create Group Calendar' }} />
+      <Stack.Screen name="InvitationsScreen" component={InvitationsScreen} options={{ title: 'Invitations Screen' }} />
       <Stack.Screen name="ScheduleGroupActivity" component={ScheduleGroupActivity} options={{ title: 'Schedule Group Activity'}}/>
     </GroupStack.Navigator>
   );
