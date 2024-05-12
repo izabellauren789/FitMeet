@@ -8,11 +8,13 @@ const SearchScreen = () => {
     const [username, setUsername] = useState('');
     const [users, setUsers] = useState([]);
 
+    // Function to search for users by username
     const searchUsers = async () => {
         if (username.trim() === "") {
             Alert.alert("Validation", "Please enter a username to search.");
             return;
         }
+        // Query to search for users by username
         const q = query(collection(db, "users"), where("username", "==", username.trim()));
         const querySnapshot = await getDocs(q);
         const results = [];
@@ -25,16 +27,21 @@ const SearchScreen = () => {
         }
     };
 
+    // Function to follow a user
+
     const followUser = async (userIdToFollow, index) => {
         if (!auth.currentUser) {
             Alert.alert("Error", "You are not logged in!");
             return;
         }
+
+        // Get the current user's document reference and the user to follow's document reference
         const currentUserId = auth.currentUser.uid;
         const currentUserDocRef = doc(db, "users", currentUserId);
         const userToFollowDocRef = doc(db, "users", userIdToFollow);
 
         try {
+            // Update the current user's following array and the user to follow's followers array
             await updateDoc(currentUserDocRef, {
                 following: arrayUnion(userIdToFollow)
             });

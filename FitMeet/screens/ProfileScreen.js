@@ -5,6 +5,7 @@ import { auth, db } from '../FirebaseConfig';
 import { signOut } from 'firebase/auth';
 import { LinearGradient } from 'expo-linear-gradient';
 
+// Profile screen component
 
 const ProfileScreen = ({ navigation }) => {
     const [userData, setUserData] = useState({
@@ -16,7 +17,7 @@ const ProfileScreen = ({ navigation }) => {
         followers: [],
         following: [],
     });
-
+//  Fetch user data from Firestore
     const fetchUserData = async () => {
         if (auth.currentUser) {
             const userDocRef = doc(db, "users", auth.currentUser.uid);
@@ -33,7 +34,7 @@ const ProfileScreen = ({ navigation }) => {
             alert("No user is logged in.");
         }
     };
-
+// Logout function
     const handleLogout = async () => {
         try {
             await signOut(auth);

@@ -10,6 +10,7 @@ const Loginscreen = () => {
     const [password, setPassword] = useState('');
     const navigation = useNavigation();
 
+    // Check if user is already logged in
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -19,9 +20,12 @@ const Loginscreen = () => {
         return unsubscribe;
     }, [navigation]);
 
+    // Navigate to the Signup screen
     const signUp = () => {
         navigation.navigate('Signup');
     };
+
+    // Sign in with email and password
 
     const signIn = async () => {
         try {

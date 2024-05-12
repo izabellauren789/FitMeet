@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, ScrollView, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -7,33 +6,36 @@ import { db, auth } from '../FirebaseConfig';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 
 const GroupsScreen = () => {
-  const navigation = useNavigation();
-  const [groupCalendars, setGroupCalendars] = useState([]);
+  const navigation = useNavigation(); // Hook to access navigation object
+  const [groupCalendars, setGroupCalendars] = useState([]); // State to store groups the user belongs to
 
+  // Function to fetch groups from Firestore
   const fetchGroups = async () => {
-    const userEmail = auth.currentUser?.email;
+    const userEmail = auth.currentUser?.email; // Get the currently logged in user's email
     if (!userEmail) {
       console.log("No user logged in");
       return;
     }
 
+    // Query to find groups where the current user is a member
     const groupsQuery = query(collection(db, 'Groups'), where('members', 'array-contains', userEmail));
 
     try {
       const groupsSnapshot = await getDocs(groupsQuery);
-      const groups = groupsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setGroupCalendars(groups);
+      const groups = groupsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })); // Map through documents and store their data
+      setGroupCalendars(groups); // Update state with the fetched groups
     } catch (error) {
       console.error("Error fetching groups:", error);
     }
   };
 
+  // UseEffect to set up an event listener that fetches groups when the screen is focused
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       fetchGroups();  // This ensures groups are refreshed every time this screen is focused.
     });
 
-    return unsubscribe;  // Clean up the event listener
+    return unsubscribe;  // Clean up the event listener on component unmount
   }, [navigation]);
 
   return (

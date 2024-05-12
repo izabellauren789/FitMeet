@@ -10,6 +10,8 @@ import { collection, addDoc } from 'firebase/firestore';
 import { db, auth } from '../FirebaseConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+// Schedule group activity component
+
 const storeData = async (value) => {
     try {
         constjsonValue = JSON.stringify(value)
@@ -19,6 +21,7 @@ const storeData = async (value) => {
     }
 }
 
+// Function to read data from AsyncStorage
 const readData = async () => {
     try {
         const jsonValue = await AsyncStorage.getItem('@storage_Key')
@@ -28,6 +31,7 @@ const readData = async () => {
     }
 }
 
+// Schedule group activity component
 const ScheduleGroupActivity = ({ navigation }) => {
     const [activity, setActivity] = useState('');
     const [date, setDate] = useState('');
@@ -35,6 +39,7 @@ const ScheduleGroupActivity = ({ navigation }) => {
     const [sendNotification, setSendNotification] = useState(false);
     const [markedDates, setMarkedDates] = useState({});
 
+    // Schedule activity function
     const handleSchedule = async () => {
         const newMarkedDates = {
           ...markedDates,
@@ -76,6 +81,8 @@ const ScheduleGroupActivity = ({ navigation }) => {
         setDate('');
         setLocation('');
       };
+
+      // Load saved events from AsyncStorage
 
       useEffect(() => {
         const loadEvents = async () => {

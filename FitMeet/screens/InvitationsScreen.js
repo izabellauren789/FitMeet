@@ -9,6 +9,7 @@ const ViewInvitationsScreen = () => {
   const navigation = useNavigation();
   const [invitations, setInvitations] = useState([]);
 
+  // Effect hook to fetch invitations from Firestore 
   useEffect(() => {
     const fetchInvitations = async () => {
       const userEmail = auth.currentUser?.email;
@@ -20,12 +21,14 @@ const ViewInvitationsScreen = () => {
       const invitationsQuery = query(collection(db, 'Invitations'), where('recipient', '==', userEmail), where('status', '==', 'pending'));
 
       try {
+        // Query to fetch pending invitations for the current user
         const snapshot = await getDocs(invitationsQuery);
         if (snapshot.empty) {
           console.log('No pending invitations found.');
           return;
         }
 
+        // Map through documents and store their data
         const fetchedInvitations = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         setInvitations(fetchedInvitations);
       } catch (error) {
@@ -37,6 +40,7 @@ const ViewInvitationsScreen = () => {
     fetchInvitations();
   }, []);
 
+  // Function to accept an invitation
   const acceptInvitation = async (invitation) => {
     const invitationDocRef = doc(db, 'Invitations', invitation.id);
     try {

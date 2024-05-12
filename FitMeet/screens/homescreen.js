@@ -6,8 +6,9 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 
 
 const Homescreen = () => {
-  const [activities, setItems] = useState({});
+  const [activities, setItems] = useState({}); // State to hold agenda items
 
+  // Effect hook to fetch activities from Firestore when the component mounts
     useEffect(() => {
         const fetchActivities = async () => {
           const userEmail = auth.currentUser?.email;
@@ -16,6 +17,7 @@ const Homescreen = () => {
             return
           }
           try {
+            // Query to fetch activities where the current user is the host and process each activity document
             const activitiesQuery = query(collection(db, 'activities'), where('host', '==', userEmail));
             const querySnapshot = await getDocs(activitiesQuery);
             const loadedItems = querySnapshot.docs.map(doc => ({

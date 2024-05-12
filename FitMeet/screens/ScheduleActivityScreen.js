@@ -14,6 +14,7 @@ const ScheduleActivityScreen = ({ navigation }) => {
   const [location, setLocation] = useState('');
   const [markedDates, setMarkedDates] = useState({});
 
+  // Schedule activity function
   const handleSchedule = async () => {
     const newMarkedDates = {
       ...markedDates,

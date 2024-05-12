@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, FlatList, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -6,20 +5,23 @@ import { db, auth } from '../FirebaseConfig';
 import { collection, query, where, getDocs, addDoc } from 'firebase/firestore';
 
 const CreateGroupCalendarScreen = ({ navigation }) => {
-  const [groupName, setGroupName] = useState('');
-  const [members, setMembers] = useState([]);
-  const [username, setUsername] = useState('');
+  const [groupName, setGroupName] = useState(''); // State for storing the group name
+  const [members, setMembers] = useState([]); // State for storing the list of members
+  const [username, setUsername] = useState(''); // State for storing the username input
 
+  // Function to handle adding members to the group
   const handleAddMember = async () => {
     if (username) {
+      // Query the users collection by username
       const q = query(collection(db, "users"), where("username", "==", username));
       const querySnapshot = await getDocs(q);
       if (!querySnapshot.empty) {
-        const user = querySnapshot.docs[0].data();
-        const newMember = { username: user.username, email: user.email, id: user.id };
+        const user = querySnapshot.docs[0].data(); // Get user data from the first document
+        const newMember = { username: user.username, email: user.email, id: user.id }; // Prepare new member object
+        // Check for duplicate members by email
         if (!members.some(member => member.email === newMember.email)) {
-          setMembers([...members, newMember]);
-          setUsername('');
+          setMembers([...members, newMember]); // Add new member to the list
+          setUsername(''); // Clear the username input
         } else {
           Alert.alert("Duplicate", "Member has already been added");
         }
@@ -29,6 +31,7 @@ const CreateGroupCalendarScreen = ({ navigation }) => {
     }
   };
 
+  // Function to handle the creation of the group
   const handleSubmit = async () => {
     if (groupName === '' || members.length === 0) {
       Alert.alert("Incomplete", "Please enter a group name and add at least one member.");
@@ -49,6 +52,7 @@ const CreateGroupCalendarScreen = ({ navigation }) => {
     };
 
     try {
+      // Create the group in the database
       const docRef = await addDoc(collection(db, 'Groups'), groupData);
       console.log('Group added with ID:', docRef.id);
       
@@ -67,7 +71,7 @@ const CreateGroupCalendarScreen = ({ navigation }) => {
       });
 
       Alert.alert("Success", "Group created and invitations sent.");
-      navigation.goBack();
+      navigation.goBack(); // Navigate back to the previous screen
     } catch (error) {
       console.error('Error adding group:', error);
       Alert.alert("Error", "Failed to create group.");
